@@ -1,4 +1,13 @@
 <h3 *ngIf="products;else noProduct">{{title}}</h3>
+<div class="form-group">
+
+
+
+    <input type="email" class="form-control" id="ProductName" placeholder="Arama" [(ngModel)]="filterText">
+    <small *ngIf="filterText" class="form-text text-muted">Şuan <strong>{{filterText}} </strong>aranıyor</small>
+</div>
+
+
 
 
 <div class="row">
@@ -9,17 +18,17 @@
         </div>
 
     </ng-template>
-    <div *ngFor="let product of products" class="card" style="width: 18rem;">
+    <div *ngFor="let product of products | productFilter:filterText" class="card" style="width: 18rem;">
         <img [src]="product.imageUrl" class="card-img-top" alt="...">
         <div class="card-body">
-            <h5 class="card-title">{{product.name}}</h5>
+            <h5 class="card-title">{{product.name}} {{product.price | currency:"USD"}}</h5>
             <p class="card-text">{{product.descripton}}</p>
-            <a href="#" class="btn btn-primary">{{product.price}}</a>
+            <a (click)="addtocart(product)" href="#" class="btn btn-primary">Sepete At</a>
         </div>
     </div>
- 
- 
-    
+
+
+
 
 
 
