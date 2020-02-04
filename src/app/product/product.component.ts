@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { product } from './product';
 import { AlertifyService } from '../Services/alertify.service';
+import { HttpClient } from '@angular/common/http'
 
 
 @Component({
@@ -10,25 +11,21 @@ import { AlertifyService } from '../Services/alertify.service';
 })
 export class ProductComponent implements OnInit {
 
-  constructor(private alertifyService:AlertifyService) { }
+  constructor(private alertifyService: AlertifyService, private http: HttpClient) { }
   title = "Ürün Listesi";
-  filterText=""; 
-  products : product[]=[
-
-    {id:1, name:"Laptop", price:2500, categoryId:1, descripton:"Asus Zen book",imageUrl:"https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"},
-    {id:2, name:"Mause", price:25, categoryId:2, descripton:"A4 Mause",imageUrl:"https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"},
-    {id:2, name:"Klavye", price:45, categoryId:2, descripton:"A4 Kalvye",imageUrl:"https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"},
-    {id:2, name:"Cacık", price:55, categoryId:2, descripton:"A4 cacık",imageUrl:"https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"},
-    {id:2, name:"Kulaklık", price:15, categoryId:2, descripton:"A4 kulaklıkların en güzeli",imageUrl:"https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"}
-
+  filterText = "";
+  products: product[] = [
 
   ]
   ngOnInit() {
+    this.http.get<product[]>("http://localhost:3000/product").subscribe(data => {
+      this.products = data;
+    })
   }
 
-  addtocart(product){
+  addtocart(product) {
 
-    this.alertifyService.basarili(product.name+ " eklendi");
+    this.alertifyService.basarili(product.name + " eklendi");
   }
 
 }
