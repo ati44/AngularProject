@@ -41,5 +41,6 @@ export class ProductComponent implements OnInit {
 
     this.alertifyService.basarili(product.name + " eklendi");
   }
+  
 
 }
